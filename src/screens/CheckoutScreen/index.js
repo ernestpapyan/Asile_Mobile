@@ -1,6 +1,6 @@
 import React, { Component, useRef } from 'react';
 import { connect } from "react-redux";
-import { View, BackHandler, Modal, TouchableOpacity, Image, Text, TextInput, PermissionsAndroid } from 'react-native';
+import { View, BackHandler, Modal, TouchableOpacity, Image, Text, TextInput, PermissionsAndroid, TouchableHighlight } from 'react-native';
 import styles from './style';
 import StatusBarPlaceHolder from "../../components/statusbarPlaceHolder";
 import WaitingDialog from "../../components/waitingDialog";
@@ -15,11 +15,13 @@ import { SERVER_URL } from "../../common/config";
 import Geolocation from '@react-native-community/geolocation';
 import { getPreciseDistance } from 'geolib';
 import moment from 'moment';
+import SignatureCapture from 'react-native-signature-capture';
 
 // import * as userActions from "../../redux/actions/userActions";
 import { bindActionCreators } from "redux";
 import { H1, Item } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
+import RNFetchBlob from 'rn-fetch-blob'
 const createFormData = (photo, body) => {
     const data = new FormData();
 
@@ -53,6 +55,7 @@ class CheckoutScreen extends Component {
             latitude: '',
             longitude: '',
             signature: 'Signature',
+            upload_signature: '',
             client_latitude: '',
             client_longitude: '',
             note: '',
@@ -293,7 +296,7 @@ class CheckoutScreen extends Component {
             } else if (response.customButton) {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
-                console.log('User selected a file form camera or gallery', response);
+                console.log('User selected a file form camera or gallery', response.uri);
                 const data = new FormData();
                 data.append('name', 'avatar');
                 data.append('fileData', {
@@ -315,10 +318,10 @@ class CheckoutScreen extends Component {
                         return res.json()
                     })
                     .then(res => {
-                        console.log(res.path);
+                        console.log(res.path.split('\\')[1]);
                         this.setState({
                             ...this.state,
-                            upload_picture: res.path
+                            upload_picture: res.path.split('\\')[1]
                         })
                         return true
                     })
@@ -336,7 +339,8 @@ class CheckoutScreen extends Component {
             check_out_datetime: this.state.date + " " + this.state.time,
             upload_picture: this.state.upload_picture,
             notes: this.state.upload_notes,
-            reason: this.state.upload_reason
+            reason: this.state.upload_reason,
+            signature: this.state.upload_signature
         }
         fetch(`${SERVER_URL}checkout`, {
             method: 'POST',
@@ -368,13 +372,50 @@ class CheckoutScreen extends Component {
 
     }
 
-    // _signaturePadError = (error) => {
-    //     console.error(error);
-    // };
+    saveSign() {
+        this.refs["sign"].saveImage();
+    }
 
-    // _signaturePadChange = ({ base64DataUrl }) => {
-    //     console.log("Got new signature: " + base64DataUrl);
-    // };
+    resetSign() {
+        this.refs["sign"].resetImage();
+    }
+
+    _onSaveEvent(result) {
+        //result.encoded - for the base64 encoded png
+        //result.pathName - for the file path name
+        // let that = this;
+        console.log(result);
+        fetch(`${SERVER_URL}signature`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                uri: result.encoded,
+                type: 'image/png',
+                name: 'signature.png'
+            })
+        }).then((res) => {
+            console.log(res);
+            return res.json()
+        })
+        .then(res => {
+            console.log(res.name);
+            this.setState({
+                upload_signature: res.name
+            })
+            return true
+        }).catch(error => {
+            console.warn(error);
+        });
+
+    }
+    _onDragEvent() {
+        // This callback will be called when the user enters signature
+        console.log("dragged");
+    }
+
     render() {
 
         return (
@@ -445,18 +486,6 @@ class CheckoutScreen extends Component {
                                         <TextInput style={styles.inputLatLongBox} editable={false} placeholder="Longitude" value={this.state.longitude} />
                                     </View>
                                 </View>
-                                {/* <View style={{
-                            width: '100%',
-                            height: 150,
-                        }}>
-                            <View style={styles.inputContainer}>
-                                <TextInput style={styles.time} editable={false}>Signature</TextInput>
-                            </View>
-                            <SignaturePad onError={this._signaturePadError}
-                                onChange={this._signaturePadChange}
-                                style={{ flex: 1, backgroundColor: 'white', margin: 10, }} />
-
-                        </View> */}
                                 <View style={styles.inputContainer}>
 
                                     <Picker
@@ -525,6 +554,36 @@ class CheckoutScreen extends Component {
                                     }
 
                                 </View>
+                                <View style={{ borderColor: 'red', borderWidth: 1 }}>
+                                    <SignatureCapture
+                                        style={{
+                                            borderColor: 'black',
+                                            borderWidth: 0.5,
+                                            width: "90%",
+                                            height: 100
+                                        }}
+                                        ref="sign"
+                                        onSaveEvent={this._onSaveEvent.bind(this)}
+                                        onDragEvent={this._onDragEvent}
+                                        saveImageFileInExtStorage={false}
+                                        showNativeButtons={false}
+                                        showTitleLabel={false}
+                                        viewMode={"portrait"} />
+                                </View>
+
+                                <View style={{ flex: 1, flexDirection: "row" }}>
+                                    <TouchableHighlight style={styles.buttonStyle}
+                                        onPress={() => { this.saveSign() }} >
+                                        <Text>Save</Text>
+                                    </TouchableHighlight>
+
+                                    <TouchableHighlight style={styles.buttonStyle}
+                                        onPress={() => { this.resetSign() }} >
+                                        <Text>Reset</Text>
+                                    </TouchableHighlight>
+
+                                </View>
+
                                 <TouchableOpacity
                                     style={styles.buttonContainer}
                                     onPress={this.checkout}>

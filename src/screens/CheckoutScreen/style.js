@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
-import {black, grayBackgroundLight, primaryDark, white, yellow} from "../../styles/colors";
-import {boxShadow, margin, padding, screenWidth} from "../../styles/mixins";
+import { StyleSheet } from 'react-native';
+import { black, grayBackgroundLight, primaryDark, white, yellow } from "../../styles/colors";
+import { boxShadow, margin, padding, screenWidth } from "../../styles/mixins";
 
 const styles = StyleSheet.create({
     container: {
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         height: '10%',
         backgroundColor: 'white',
         marginTop: '5%',
-        flexDirection:'row'
+        flexDirection: 'row'
     },
     imageBackground: {
         width: screenWidth,
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: 'white',
         marginBottom: 20,
-        marginLeft:10,
+        marginLeft: 10,
         marginRight: 10,
         ...boxShadow()
     },
@@ -185,9 +185,14 @@ const styles = StyleSheet.create({
         ...padding(10, 20)
     },
     image: {
-        width: screenWidth/2.5,
-        height: '100%',
+        width: screenWidth / 2.3,
+        height: '90%',
     },
+    buttonStyle: {
+        flex: 1, justifyContent: "center", alignItems: "center", height: 50,
+        backgroundColor: "#eeeeee",
+        margin: 10
+    }
 });
 
 export default styles;

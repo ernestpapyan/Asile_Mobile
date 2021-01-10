@@ -48,7 +48,7 @@ class SplashScreen extends Component {
         return (
             <View style={[AppStyles.containerWhite, AppStyles.centered]}>
                 <StatusBar barStyle='light-content' backgroundColor='#000000' />
-                <Image style={{ width: 120, height: 120 }} source={require('../../../assets/logo.png')} />
+                <Image style={{ width: 100, height: 100 }} source={require('../../../assets/logo.png')} />
                 <Modal transparent={true} visible={this.state.isLoading} animationType='fade'
                     onRequestClose={() => this.updateLoadingStatus(false)}>
                     <WaitingDialog />

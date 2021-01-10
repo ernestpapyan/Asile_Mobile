@@ -88,9 +88,12 @@ class CheckinScreen extends Component {
                     // console.log(scheduleData)
                     var schedule_items = []
                     let currentDate = new Date()
+                    let startDateTime = moment(currentDate).startOf('day');
+                    let endDateTime = moment(currentDate).add(1, 'day').endOf('day');
+                    console.log('endDateTime===>', endDateTime)
                     scheduleData.filter(function (fitem) {
                         console.log(moment(fitem.schedule_datetime))
-                        return moment(fitem.schedule_datetime) < currentDate;
+                        return (moment(fitem.schedule_datetime) > startDateTime && moment(fitem.schedule_datetime) < endDateTime);
                     }).map(item => {
                         let datetime = item.schedule_datetime;
                         let client_name = item.client_entity_name;
@@ -104,11 +107,11 @@ class CheckinScreen extends Component {
                         schedule_items.push(listItem)
 
                     })
-                        this.setState({
-                            ...this.state,
-                            schedule_id: schedule_items[0].value ? schedule_items[0].value:0,
-                            schedule_items: schedule_items
-                        })
+                    this.setState({
+                        ...this.state,
+                        schedule_id: schedule_items[0].value ? schedule_items[0].value : 0,
+                        schedule_items: schedule_items
+                    })
 
                     return true;
                 })

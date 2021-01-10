@@ -104,7 +104,7 @@ class CreateClientScreen extends Component {
                         throw (res.error);
                     }
                     console.log(res)
-                    if (res.client_id == null) {
+                    if (res.client_id != null) {
                         SimpleToast.show('This client is already exist.')
                     } else {
                         SimpleToast.show("Create Success!")

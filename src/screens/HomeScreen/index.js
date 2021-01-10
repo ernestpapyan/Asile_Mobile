@@ -252,7 +252,6 @@ class Home extends Component {
 
     let startDateTime = moment(date).startOf('day');
     let endDateTime = moment(date).endOf('day');
-    console.log("121321321321==>", startDateTime, endDateTime)
     this.state.schedules.filter(function (fitem) {
       console.log(moment(fitem.schedule_datetime))
       return (moment(fitem.schedule_datetime) > startDateTime && moment(fitem.schedule_datetime) < endDateTime);
@@ -269,9 +268,9 @@ class Home extends Component {
       let check_out_datetime = item.check_out_datetime
       let check_in = 'No'
       let check_out = 'No'
-      if (check_in_datetime == "0000-00-00 00:00:00") {
+      if (check_in_datetime != "0000-00-00 00:00:00") {
         check_in = 'Yes'
-        if (check_out_datetime == "0000-00-00 00:00:00") {
+        if (check_out_datetime != "0000-00-00 00:00:00") {
           check_out = 'Yes'
         }
       }

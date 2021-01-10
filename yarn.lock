@@ -2894,15 +2894,15 @@ escape-html@~1.0.3:
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
   integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
 
-escape-string-regexp@2.0.0, escape-string-regexp@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz#a30304e99daa32e23b2fd20f51babd07cffca344"
-  integrity sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==
-
 escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
+
+escape-string-regexp@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz#a30304e99daa32e23b2fd20f51babd07cffca344"
+  integrity sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==
 
 escodegen@^1.14.1:
   version "1.14.3"
@@ -3950,7 +3950,7 @@ internal-slot@^1.0.2:
     has "^1.0.3"
     side-channel "^1.0.2"
 
-invariant@2.2.4, invariant@^2.2.4:
+invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -6687,17 +6687,12 @@ react-native-side-menu@^1.1.3:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-signature-canvas@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-signature-canvas/-/react-native-signature-canvas-3.3.0.tgz#2789b4d62df5c8827760ea5ea9f5dd59ff17b9d2"
-  integrity sha512-+X5iEPDvCFiHs172n0Gp3TwhUclJHGpsbGPumCWbxg1KPrSDdxeXq2k485jfKuv2rCcQ48HiLkoYKYh63KLmWA==
-
-react-native-signature-pad@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-signature-pad/-/react-native-signature-pad-0.1.0.tgz#b921c290f06cce99664b5bff23aa3ec30f482c63"
-  integrity sha512-OFcvfdmrB+UdvHIyFYGtBpoDc0hR56T/9/s5+vpkqMJxqOWCSuCNIzzKKT8lWzsMB/KYhojs+dTfH8cIhTA+OA==
+react-native-signature-capture@^0.4.10:
+  version "0.4.10"
+  resolved "https://registry.yarnpkg.com/react-native-signature-capture/-/react-native-signature-capture-0.4.10.tgz#ee355a7ca3e8341d50304572258607b9876a34a6"
+  integrity sha512-4VbZ6wJVLUdai3WfSiTR2YacTxVuDamBrYl7lxbCrsqa0QyBSiupc5Yz5/Qg7GOuD72jhVXpWJvwJQSmMRy4dQ==
   dependencies:
-    prop-types "^15.6.0"
+    prop-types "^15.5.10"
 
 react-native-simple-card-view@^0.3.0:
   version "0.3.0"
@@ -6756,14 +6751,6 @@ react-native-vector-icons@^7.0.0, react-native-vector-icons@^7.1.0:
     lodash.template "^4.5.0"
     prop-types "^15.7.2"
     yargs "^15.0.2"
-
-react-native-webview@^11.0.2:
-  version "11.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.0.2.tgz#c88e84fa470f04ff070ff8a2c7f4d7295d46bb06"
-  integrity sha512-GDyIBRbCZ2wbMUGCxA7LufSEbSoWKOzkFB8YljmAffA15tzN6ccvGEquB/hkk5KhvoYy300kwJyEmyBeG6d/AA==
-  dependencies:
-    escape-string-regexp "2.0.0"
-    invariant "2.2.4"
 
 react-native@0.63.3:
   version "0.63.3"
