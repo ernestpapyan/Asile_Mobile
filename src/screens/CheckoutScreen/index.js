@@ -47,8 +47,6 @@ class CheckoutScreen extends Component {
             isLoading: false,
             schedule_items: [],
             schedule_id: 0,
-            selected_reason: '',
-            upload_reason: 'Create Sales Order',
             client_id: 0,
             date: '',
             time: '',
@@ -64,17 +62,10 @@ class CheckoutScreen extends Component {
             upload_notes: '',
             isNote: true,
             isUpload: true,
-            isOtherReason: false,
             user_id: '',
             predicted_time_spent: 0,
             datePickerVisible: false,
             timePickerVisible: false,
-            visiting_reason: [
-                'Create Sales Order',
-                'Billing purposes',
-                'Offer goods',
-                'Others'
-            ],
             error: '',
         };
         this.getCurrentLocation()
@@ -128,9 +119,11 @@ class CheckoutScreen extends Component {
                     // console.log(scheduleData)
                     var schedule_items = []
                     let currentDate = new Date()
+                    let startDateTime = moment(currentDate).startOf('day');
+                    let endDateTime = moment(currentDate).endOf('day');
                     scheduleData.filter(function (fitem) {
                         console.log(moment(fitem.schedule_datetime))
-                        return moment(fitem.schedule_datetime) < currentDate;
+                        return (moment(fitem.schedule_datetime) > startDateTime && moment(fitem.schedule_datetime) < endDateTime);
                     }).map(item => {
                         let datetime = item.schedule_datetime;
                         let client_name = item.client_entity_name;
@@ -339,7 +332,6 @@ class CheckoutScreen extends Component {
             check_out_datetime: this.state.date + " " + this.state.time,
             upload_picture: this.state.upload_picture,
             notes: this.state.upload_notes,
-            reason: this.state.upload_reason,
             signature: this.state.upload_signature
         }
         fetch(`${SERVER_URL}checkout`, {
@@ -486,53 +478,8 @@ class CheckoutScreen extends Component {
                                         <TextInput style={styles.inputLatLongBox} editable={false} placeholder="Longitude" value={this.state.longitude} />
                                     </View>
                                 </View>
-                                <View style={styles.inputContainer}>
-
-                                    <Picker
-                                        style={styles.inputBox}
-                                        placeholder="Visiting Reason"
-                                        selectedValue={this.state.selected_reason}
-                                        onValueChange={(value) => {
-                                            console.log(value)
-                                            if (value == 'Others') {
-                                                this.setState({
-                                                    ...this.state,
-                                                    isOtherReason: true,
-                                                    selected_reason: value
-                                                })
-                                            } else {
-                                                this.setState({
-                                                    ...this.state,
-                                                    selected_reason: value,
-                                                    isOtherReason: false,
-                                                    upload_reason: value
-                                                })
-                                            }
-                                        }
-                                        } >
-                                        {
-                                            this.state.visiting_reason.map((item, index) => {
-                                                return (
-                                                    <Picker.Item key={index} label={item} value={item} />
-                                                )
-                                            })
-                                        }
-                                    </Picker>
-                                </View>
-
-                                <View>
-                                    {
-                                        this.state.isOtherReason && <View style={styles.inputReason}>
-                                            <TextInput
-                                                style={styles.note}
-                                                multiline={true}
-                                                placeholder={'REASON'}
-                                                onChangeText={value => this.setState({ error: '', upload_reason: value })}
-                                            >{this.state.upload_reason}</TextInput>
-                                        </View>
-                                    }
-
-                                </View>
+                                
+                                
                                 <View style={{ flexDirection: 'row', }}>
                                     {
                                         this.state.isNote == true && <View style={styles.inputNote}>

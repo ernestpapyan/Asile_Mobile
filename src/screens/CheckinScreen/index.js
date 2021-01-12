@@ -89,7 +89,7 @@ class CheckinScreen extends Component {
                     var schedule_items = []
                     let currentDate = new Date()
                     let startDateTime = moment(currentDate).startOf('day');
-                    let endDateTime = moment(currentDate).add(1, 'day').endOf('day');
+                    let endDateTime = moment(currentDate).endOf('day');
                     console.log('endDateTime===>', endDateTime)
                     scheduleData.filter(function (fitem) {
                         console.log(moment(fitem.schedule_datetime))

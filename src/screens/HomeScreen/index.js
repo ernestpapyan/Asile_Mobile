@@ -254,7 +254,7 @@ class Home extends Component {
     let endDateTime = moment(date).endOf('day');
     this.state.schedules.filter(function (fitem) {
       console.log(moment(fitem.schedule_datetime))
-      return (moment(fitem.schedule_datetime) > startDateTime && moment(fitem.schedule_datetime) < endDateTime);
+      return (moment(fitem.schedule_datetime) > startDateTime && moment(fitem.schedule_datetime) < endDateTime && fitem.check_out_datetime == "0000-00-00 00:00:00");
     }).map(item => {
       // this.state.scheduleData.map(item => {
       let datetime = item.schedule_datetime;

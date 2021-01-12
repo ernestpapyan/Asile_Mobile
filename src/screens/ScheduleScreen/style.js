@@ -109,6 +109,16 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         ...boxShadow()
     },
+    inputReason: {
+        width:  screenWidth - 40,
+        height: 80,
+        justifyContent: 'center',
+        alignItems: 'baseline',
+        borderRadius: 10,
+        backgroundColor: 'white',
+        marginBottom: 5,
+        ...boxShadow()
+    },
     inputIcon: {
         width: 15,
         height: 15,
@@ -128,6 +138,14 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginLeft: 10
     },
+    note: {
+        width: '100%',
+        color: 'black',
+        fontSize: 15,
+        textAlignVertical: 'center',
+        alignSelf: 'baseline',
+        marginLeft: 10
+    },
     buttonContainer: {
         width: screenWidth - 40,
         height: 40,
@@ -136,7 +154,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         textAlign: 'center',
         justifyContent: 'center',
-        marginTop: 35,
+        marginTop: 15,
         ...padding(10, 20)
     },
     image: {

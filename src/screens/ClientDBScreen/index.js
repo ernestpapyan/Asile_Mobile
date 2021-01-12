@@ -223,7 +223,7 @@ class ClientDBScreen extends Component {
                         </View>
                         <View>
                             <Text style={{ fontSize: 20, marginBottom: 20, marginTop: 20 }}>Client Entity Name: {this.state.selectedItem.client_entity_name}</Text>
-                            <Text style={{ fontSize: 20, marginBottom: 20 }}>Client Owner Name: {this.state.selectedItem.client_owner_name}</Text>
+                            <Text style={{ fontSize: 20, marginBottom: 20 }}>Custom Field: {this.state.selectedItem.custom_field}</Text>
                             <Text style={{ fontSize: 20, marginBottom: 20 }}>Address: {this.state.selectedItem.address}</Text>
 
                         </View >

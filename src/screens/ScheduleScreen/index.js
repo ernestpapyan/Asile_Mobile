@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { View, BackHandler, Modal, ImageBackground, TouchableOpacity, Picker, Image, Text, TextInput, Alert } from 'react-native';
+import { View, BackHandler, Modal, ImageBackground, TouchableOpacity, Image, Text, TextInput, Alert } from 'react-native';
 import styles from "./style";
 import StatusBarPlaceHolder from "../../components/statusbarPlaceHolder";
 import WaitingDialog from "../../components/waitingDialog";
@@ -11,7 +11,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import { scheduleActions } from '../../redux/actions/ScheduleAction'
 import { SERVER_URL } from "../../common/config";
-
+import { Picker } from '@react-native-community/picker'
 // import * as userActions from "../../redux/actions/userActions";
 import { bindActionCreators } from "redux";
 import { H1, Item } from 'native-base';
@@ -35,6 +35,16 @@ class SchduleScreen extends Component {
             min_time: new Date(),
             max_time: new Date(),
             error: '',
+
+            selected_reason: '',
+            upload_reason: 'Create Sales Order',
+            isOtherReason: false,
+            visiting_reason: [
+                'Create Sales Order',
+                'Billing purposes',
+                'Offer goods',
+                'Others'
+            ],
         };
     }
 
@@ -177,7 +187,7 @@ class SchduleScreen extends Component {
                 } else {
                     SimpleToast.show("Successfully scheduled.")
                 }
-                
+
                 return true;
             })
             .catch(error => {
@@ -244,6 +254,52 @@ class SchduleScreen extends Component {
                         <View style={styles.inputContainer}>
                             <Image style={styles.inputIcon} source={require('../../assets/spend-time.png')} />
                             <TextInput style={styles.inputBox} placeholder="Predicted Time Spent(min)" maxLength={10} keyboardType="numeric" onChangeText={timeSpentInput => this.setState({ error: '', predicted_time_spent: timeSpentInput })} />
+                        </View>
+                        <View style={styles.inputContainer}>
+
+                            <Picker
+                                style={styles.inputBox}
+                                placeholder="Visiting Reason"
+                                selectedValue={this.state.selected_reason}
+                                onValueChange={(value) => {
+                                    console.log(value)
+                                    if (value == 'Others') {
+                                        this.setState({
+                                            ...this.state,
+                                            isOtherReason: true,
+                                            selected_reason: value
+                                        })
+                                    } else {
+                                        this.setState({
+                                            ...this.state,
+                                            selected_reason: value,
+                                            isOtherReason: false,
+                                            upload_reason: value
+                                        })
+                                    }
+                                }
+                                } >
+                                {
+                                    this.state.visiting_reason.map((item, index) => {
+                                        return (
+                                            <Picker.Item key={index} label={item} value={item} />
+                                        )
+                                    })
+                                }
+                            </Picker>
+                        </View>
+                        <View>
+                            {
+                                this.state.isOtherReason && <View style={styles.inputReason}>
+                                    <TextInput
+                                        style={styles.note}
+                                        multiline={true}
+                                        placeholder={'REASON'}
+                                        onChangeText={value => this.setState({ error: '', upload_reason: value })}
+                                    >{this.state.upload_reason}</TextInput>
+                                </View>
+                            }
+
                         </View>
                         <TouchableOpacity
                             style={styles.buttonContainer}

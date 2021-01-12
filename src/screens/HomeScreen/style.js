@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         height: 70,
     },
     image: {
-        width: screenWidth / 3,
+        width: screenWidth / 2.5,
         height: '100%',
     },
     avatarContainer: {
